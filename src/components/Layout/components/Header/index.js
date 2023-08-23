@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSpinner, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 
+import Button from '~/components/Button';
 import stules from './Header.module.scss';
 import images from '~/assets/images';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -49,7 +50,12 @@ function Header() {
             </button>
           </div>
         </Tippy>
-        <div className={cs('action')}>action</div>
+        <div className={cs('action')}>
+          <Button upload icon={<FontAwesomeIcon icon={faPlus} />}>
+            Upload
+          </Button>
+          <Button primary>Log in</Button>
+        </div>
       </div>
     </header>
   );
