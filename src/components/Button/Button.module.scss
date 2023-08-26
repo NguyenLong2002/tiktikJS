@@ -1,17 +1,21 @@
 .wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 100px;
-  padding: 8px 16px;
+  padding: 9px 16px;
+  border-radius: 4px;
   font-size: 1.6rem;
   font-weight: 700;
-  border-radius: 4px;
   cursor: pointer;
   background-color: var(--white);
   border: 1px solid transparent;
   user-select: none;
 
   + .wrapper {
-    margin-left: 16px;
+    margin-left: 8px;
   }
+
   &.disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -20,7 +24,11 @@
 .icon + .title {
   margin-left: 8px;
 }
-
+.icon {
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+}
 //Button types
 .rounded {
   min-width: 90px;

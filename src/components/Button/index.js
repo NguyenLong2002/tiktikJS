@@ -9,14 +9,15 @@ function Button({
   href,
   primary = false,
   outline = false,
+  upload = false,
   rounded = false,
+  disabled = false,
   small = false,
   large = false,
-  upload = false,
-  disabled = false,
-  icon,
-  onClick,
   children,
+  className,
+  Icon,
+  onClick,
   ...passProps
 }) {
   const props = {
@@ -40,17 +41,18 @@ function Button({
     Comp = 'a';
   }
   const classes = cs('wrapper', {
+    [className]: className,
     primary,
-    outline,
-    small,
-    large,
     upload,
+    outline,
     disabled,
     rounded,
+    small,
+    large,
   });
   return (
     <Comp className={classes} {...props}>
-      {icon && <span className={cs('icon')}>{icon}</span>}
+      {Icon && <span className={cs('icon')}>{Icon}</span>}
       <span className={cs('title')}>{children}</span>
     </Comp>
   );
