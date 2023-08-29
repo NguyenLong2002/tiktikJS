@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+import HeadlessTippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleXmark,
@@ -11,6 +13,11 @@ import {
   faEarthAsia,
   faCircleQuestion,
   faKeyboard,
+  faCloudUpload,
+  faUser,
+  faCoins,
+  faGear,
+  faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '~/components/Button';
@@ -51,6 +58,30 @@ const MENU_ITEMS = [
     title: 'Keyboard shortcuts',
   },
 ];
+const userMenu = [
+  {
+    icon: <FontAwesomeIcon icon={faUser} />,
+    title: 'View profile',
+    to: '/@hoaa',
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCoins} />,
+    title: 'Get coins',
+    to: '/coin',
+  },
+  {
+    icon: <FontAwesomeIcon icon={faGear} />,
+    title: 'Settings',
+    to: '/settings',
+  },
+  ...MENU_ITEMS,
+  {
+    icon: <FontAwesomeIcon icon={faSignOut} />,
+    title: 'Log out',
+    to: '/logout',
+    separate: true,
+  },
+];
 function Header() {
   const [searchResult, setSearchResult] = useState([]);
   useEffect(() => {
@@ -68,13 +99,14 @@ function Header() {
       default:
     }
   };
+  const currentUser = true;
   return (
     <header className={cs('wraper')}>
       <div className={cs('inner')}>
         <div className={cs('logo')}>
           <img src={images.logo} alt="tiktok" />
         </div>
-        <Tippy
+        <HeadlessTippy
           visible={searchResult.length > 0}
           interactive
           render={(attrs) => (
@@ -99,18 +131,36 @@ function Header() {
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
           </div>
-        </Tippy>
-
+        </HeadlessTippy>
         <div className={cs('action')}>
-          <Button upload Icon={<FontAwesomeIcon icon={faPlus} />}>
-            Upload
-          </Button>
-          <Button primary>Log in</Button>
-
-          <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-            <button className={cs('more-btn')}>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </button>
+          {currentUser ? (
+            <>
+              <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
+                <button className={cs('action-btn')}>
+                  <FontAwesomeIcon icon={faCloudUpload} />
+                </button>
+              </Tippy>
+            </>
+          ) : (
+            <>
+              <Button upload Icon={<FontAwesomeIcon icon={faPlus} />}>
+                Upload
+              </Button>
+              <Button primary>Log in</Button>
+            </>
+          )}
+          <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+            {currentUser ? (
+              <img
+                className={cs('user-avatar')}
+                src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/752ec060f4b599ac5bfeeec8b4b5ee23~c5_100x100.jpeg?x-expires=1692867600&x-signature=W5lglHIh%2B8eTmijIXBJzy0sswKw%3D"
+                alt="Nguyen Van A"
+              />
+            ) : (
+              <button className={cs('more-btn')}>
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+              </button>
+            )}
           </Menu>
         </div>
       </div>
